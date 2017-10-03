@@ -1,5 +1,7 @@
 # pybrasil
 
+[![Build Status](https://travis-ci.org/odoo-brazil/pybrasil.svg?branch=master)](https://travis-ci.org/odoo-brazil/pybrasil)
+
 Diversas funções de validação necessárias a ERPs no Brasil:
 
 (Os nomes das funções são prolixos e longos, propositalmente, para facilitar o uso por usuários finais [usuários de RH, advogados etc.])
@@ -107,7 +109,6 @@ Submódulo produto:
 
     - valida_ean: validação dos códigos de barras dos produtos
 
-
 Submódulo valor:
 ----------------
 
@@ -140,3 +141,7 @@ Submódulo ncm:
       - NCM_CODIGO_EX
       - NBS_CODIGO
       - SERVICOS_CODIGO
+
+Submódulo python_pt_BR:
+
+    - Função python_pt_BR
