@@ -2,8 +2,8 @@
 #
 # PyBrasil - Functions useful for most Brazil's ERPs
 #
-# Copyright (C) 2016-
-# Copyright (C) Aristides Caldeira <aristides.caldeira at tauga.com.br>
+# Copyright (C) 2017-
+# Copyright (C) Ari Caldeira <ari.caldeira at tauga.com.br>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Library General Public License as
@@ -20,8 +20,8 @@
 #
 # PyBrasil - Funções de validação necessárias a ERPs no Brasil
 #
-# Copyright (C) 2016-
-# Copyright (C) Aristides Caldeira <aristides.caldeira arroba tauga.com.br>
+# Copyright (C) 2017-
+# Copyright (C) Ari Caldeira <ari.caldeira arroba tauga.com.br>
 #
 # Este programa é um software livre: você pode redistribuir e/ou modificar
 # este programa sob os termos da licença GNU Library General Public License,
@@ -44,10 +44,10 @@ from __future__ import (division, print_function, unicode_literals,
 
 from .codigo_barras import (valida_codigo_barras, identifica_codigo_barras,
     monta_linha_digitavel)
-    # valida_codigo_barras_boleto, valida_codigo_barras_arrecadacao,
-    # identifica_codigo_barras_boleto, identifica_codigo_barras_arrecadacao,
-    # monta_linha_digitavel_boleto, monta_linha_digitavel_arrecadacao
 from .linha_digitavel import (valida_linha_digitavel,
     identifica_linha_digitavel, formata_linha_digitavel, monta_codigo_barras)
-    # valida_linha_digitavel_boleto, valida_linha_digitavel_arrecadacao
-
+from .banco import Banco
+from .remessa_boleto import RemessaBoleto
+from .retorno_boleto import RetornoBoleto
+from .lista_banco import BANCO_CODIGO
+from .boleto import Boleto, gera_pdf_boletos
