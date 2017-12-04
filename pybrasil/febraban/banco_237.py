@@ -321,7 +321,14 @@ def linha_retorno_400(self, retorno):
         boleto = Boleto()
         boleto.beneficiario = retorno.beneficiario
         boleto.banco = self
-        boleto.numero_beneficiario_unicred = linha[29:36]
+
+        # No processamento do CNAB (retorno de boletos),
+        # na validacao de beneficiario, essa atribuição faz com que seja
+        # esperado:
+        #  beneficiario da carteira == beneficiario unicred do retorno
+        # Mas o beneficiario_unicred nao veio setado no retorno do banco
+
+        # boleto.numero_beneficiario_unicred = linha[29:36]
         boleto.identificacao = linha[37:62]
         boleto.nosso_numero = unicode(D(linha[70:81]))
         #boleto.nosso_numero_digito = linha[82]
