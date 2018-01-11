@@ -6285,7 +6285,7 @@ def json_decimal_default(obj):
     if isinstance(obj, DecimalOriginal) or isinstance(obj, Decimal):
         return float(str(obj))
 
-    raise TypeError(repr(o) + " is not JSON serializable")
+    raise TypeError(repr(obj) + " is not JSON serializable")
 
 import json
 json._default_encoder.default = json_decimal_default
