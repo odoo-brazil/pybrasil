@@ -1,10 +1,52 @@
 # -*- coding: utf-8 -*-
+#
+# PyBrasil - Functions useful for most Brazil's ERPs
+#
+# Copyright (C) 2016-
+# Copyright (C) Aristides Caldeira <aristides.caldeira at tauga.com.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Library General Public License as
+# published by the Free Software Foundation, either version 2.1 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# PyBrasil - Funções de validação necessárias a ERPs no Brasil
+#
+# Copyright (C) 2016-
+# Copyright (C) Aristides Caldeira <aristides.caldeira arroba tauga.com.br>
+#
+# Este programa é um software livre: você pode redistribuir e/ou modificar
+# este programa sob os termos da licença GNU Library General Public License,
+# publicada pela Free Software Foundation, em sua versão 2.1 ou, de acordo
+# com sua opção, qualquer versão posterior.
+#
+# Este programa é distribuido na esperança de que venha a ser útil,
+# porém SEM QUAISQUER GARANTIAS, nem mesmo a garantia implícita de
+# COMERCIABILIDADE ou ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Veja a
+# GNU Library General Public License para mais detalhes.
+#
+# Você deve ter recebido uma cópia da GNU Library General Public License
+# juntamente com este programa. Caso esse não seja o caso, acesse:
+# <http://www.gnu.org/licenses/>
+#
 
 from __future__ import (division, print_function, unicode_literals,
                         absolute_import)
 import os
 import sys
-from ..data import hoje, data_hora_horario_brasilia, parse_datetime
+from future.utils import python_2_unicode_compatible
+from builtins import str
+from past.builtins import basestring
+from io import open
+from ..data import hoje, data_hora_horario_brasilia, parse_datetime, formata_data
 from ..ibge import (Local, Municipio, Estado, MUNICIPIO_ESTADO_NOME, MUNICIPIO_IBGE, MUNICIPIO_SIAFI, ESTADO_IBGE, ESTADO_SIGLA)
 from ..base import tira_acentos
 from datetime import date
@@ -16,6 +58,7 @@ from copy import copy
 CURDIR = os.path.dirname(os.path.abspath(__file__))
 
 
+@python_2_unicode_compatible
 class Feriado(Local):
     def __init__(self, **kwargs):
         super(Feriado, self).__init__(**kwargs)
@@ -32,15 +75,12 @@ class Feriado(Local):
         self.data_referencia = hoje()
 
     def __str__(self):
-        return unicode.encode(self.__unicode__(), 'utf-8')
-
-    def __unicode__(self):
-        txt = self.nome + ' - ' + self.data_feriado.strftime('%a, %d-%b-%Y').decode('utf-8')
+        txt = self.nome + ' - ' + formata_data(self.data_feriado, '%a, %d-%b-%Y')
 
         if self.abrangencia == 'E':
-            txt += ', somente em ' + unicode(self.estado)
+            txt += ', somente em ' + str(self.estado)
         elif self.abrangencia == 'M':
-            txt += ', somente em ' + unicode(self.municipio)
+            txt += ', somente em ' + str(self.municipio)
 
         return txt
 
@@ -116,7 +156,7 @@ class Feriado(Local):
 def _monta_lista_feriados():
     lista = []
 
-    arquivo = open(os.path.join(CURDIR, 'feriado.txt'), 'r')
+    arquivo = open(os.path.join(CURDIR, 'feriado.txt'), 'r', encoding='utf-8')
 
     #
     # Pula a primeira linha
@@ -124,7 +164,7 @@ def _monta_lista_feriados():
     arquivo.readline()
 
     for linha in arquivo:
-        linha = linha.decode('utf-8').replace('\n', '').replace('\r', '')
+        linha = linha.replace('\n', '').replace('\r', '')
         campos = linha.split('|')
         nome, tipo, abrangencia, estado, municipio_ibge, municipio_nome, quando, dia, dia_da_semana, mes, ano, dias_de_diferenca, ajuste = campos
 
@@ -201,7 +241,7 @@ def monta_dicionario_datas(data_referencia=hoje(), tipo=None, estado=None, munic
                     if f.tipo not in tipo:
                         continue
 
-                elif isinstance(tipo, (str, unicode)):
+                elif isinstance(tipo, basestring):
                     if f.tipo != tipo:
                         continue
 
